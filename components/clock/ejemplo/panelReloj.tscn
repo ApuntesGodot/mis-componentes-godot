@@ -111,4 +111,8 @@ Minu = NodePath("../Minuto")
 Hora = NodePath("../Hora")
 metadata/_edit_use_anchors_ = true
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(132, 67)
+zoom = Vector2(4, 4)
+
 [connection signal="button_down" from="Formulario/Button" to="Formulario/Button" method="_on_button_down"]
