@@ -24,9 +24,8 @@ Pueden servir como base o referencia para funciones habituales, como relojes, te
 
 Este proyecto es personal y no tiene soporte oficial.  
 Pero si te resulta útil, puedes usarlo libremente.  
-Para cualquier duda o sugerencia, puedes abrir un *issue* o contactar conmigo por Twitter.
 
 ## ¿Quién lo mantiene?
 
-Creado y mantenido por [TuNombre o @tuusuario].  
+Creado y mantenido por [@ApuntesGodot].  
 Licencia: [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/). Puedes usar todo el contenido sin restricciones ni obligación de atribuir nada.
