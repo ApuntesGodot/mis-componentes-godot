@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dnrwy377bw1x0"]
+
+[ext_resource type="Script" uid="uid://dfev6e2vvtxtk" path="res://proyectos/reloj/escenas/scripts/agujas.gd" id="1_rw0b1"]
+[ext_resource type="AudioStream" uid="uid://0fmmeiq2upby" path="res://proyectos/reloj/recursos/audio/tick-and-tock/tick.wav" id="2_rw0b1"]
+[ext_resource type="AudioStream" uid="uid://drt8js7c8mgci" path="res://proyectos/reloj/recursos/audio/tick-and-tock/tick2.wav" id="3_glbn5"]
+
+[node name="Agujas" type="CharacterBody2D"]
+script = ExtResource("1_rw0b1")
+tick_sonido = ExtResource("2_rw0b1")
+tack_sonido = ExtResource("3_glbn5")
+
+[node name="Aguja" type="Sprite2D" parent="."]
+position = Vector2(0, -33)
+offset = Vector2(0, -10)
+
+[node name="Reproductor" type="AudioStreamPlayer2D" parent="."]

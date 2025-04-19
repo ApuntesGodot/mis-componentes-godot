@@ -1,0 +1,178 @@
+[gd_scene load_steps=12 format=3 uid="uid://8fij5of2eux8"]
+
+[ext_resource type="Texture2D" uid="uid://bmawiaefku00h" path="res://proyectos/reloj/recursos/arte/vecteezy_clock-drop-icon-logo-vector-design_11774673.jpg" id="1_anmug"]
+[ext_resource type="PackedScene" uid="uid://dnrwy377bw1x0" path="res://proyectos/reloj/escenas/agujas.tscn" id="2_1x4il"]
+[ext_resource type="Script" uid="uid://0f42r7jlwrjn" path="res://proyectos/reloj/componentes/ClockSystem.gd" id="3_1x4il"]
+[ext_resource type="Script" uid="uid://cmubuiga83d0a" path="res://proyectos/reloj/componentes/conectorAgujas.gd" id="4_3cvpw"]
+[ext_resource type="Script" uid="uid://dd7uwdhgx1rhp" path="res://proyectos/reloj/componentes/conectorTemporizador.gd" id="4_xdemk"]
+[ext_resource type="Script" uid="uid://bwscghmq1aqso" path="res://proyectos/reloj/ejemplo/scripts/verificarFormatoNumerico.gd" id="5_ofc5n"]
+[ext_resource type="Script" uid="uid://33ljku56tsad" path="res://proyectos/reloj/ejemplo/scripts/enviarCambioDeHora.gd" id="6_dofne"]
+[ext_resource type="AudioStream" uid="uid://ddm73mus35nsn" path="res://proyectos/reloj/recursos/audio/tick-and-tock/321832__lloydevans09__classic_alarm_clock_bell.wav" id="7_oajl0"]
+[ext_resource type="Script" uid="uid://cw7gs63346mjh" path="res://proyectos/reloj/ejemplo/scripts/etiquetaDeAvisoTemporizador.gd" id="7_wmjo5"]
+[ext_resource type="Script" uid="uid://cecgf3pp047rp" path="res://proyectos/reloj/ejemplo/scripts/cronometroBoton.gd" id="9_2aymq"]
+[ext_resource type="Texture2D" uid="uid://cm01t32guxepd" path="res://proyectos/reloj/recursos/atribuciones/classic_alarm_clock_bell.wav.jpg" id="11_x2p4b"]
+
+[node name="PanelReloj" type="Node2D"]
+
+[node name="FondoReloj" type="Sprite2D" parent="."]
+position = Vector2(143, 70)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_anmug")
+
+[node name="Hora" parent="FondoReloj" instance=ExtResource("2_1x4il")]
+position = Vector2(-30.0001, 39.9999)
+scale = Vector2(7.5, 5)
+tipo = "Hora"
+
+[node name="Minuto" parent="FondoReloj" instance=ExtResource("2_1x4il")]
+position = Vector2(-30.0001, 39.9999)
+scale = Vector2(7.5, 5)
+tipo = "Minuto"
+
+[node name="Segundo" parent="FondoReloj" instance=ExtResource("2_1x4il")]
+position = Vector2(-30.0001, 39.9999)
+scale = Vector2(7.5, 5)
+tipo = "Segundo"
+
+[node name="AgujaConector" type="Node" parent="." node_paths=PackedStringArray("reloj", "AgujaSegundo", "AgujaMinuto", "AgujaHora")]
+script = ExtResource("4_3cvpw")
+reloj = NodePath("../ClockSystem")
+AgujaSegundo = NodePath("../FondoReloj/Segundo")
+AgujaMinuto = NodePath("../FondoReloj/Minuto")
+AgujaHora = NodePath("../FondoReloj/Hora")
+metadata/_custom_type_script = "uid://cmubuiga83d0a"
+
+[node name="conectorTemporizador" type="Node" parent="." node_paths=PackedStringArray("reloj", "nodoAvisado")]
+script = ExtResource("4_xdemk")
+reloj = NodePath("../ClockSystem")
+nodoAvisado = NodePath("../Formulario/Alarma")
+metadata/_custom_type_script = "uid://dd7uwdhgx1rhp"
+
+[node name="ClockSystem" type="Node" parent="."]
+script = ExtResource("3_1x4il")
+segundo_inicial = 5
+metadata/_custom_type_script = "uid://0f42r7jlwrjn"
+
+[node name="Formulario" type="Node" parent="."]
+
+[node name="Alarma" type="Label" parent="Formulario" node_paths=PackedStringArray("Alarma")]
+offset_left = 82.0
+offset_top = -19.0
+offset_right = 205.0
+offset_bottom = 4.0
+text = "TIEMPO LIMITE"
+horizontal_alignment = 1
+script = ExtResource("7_wmjo5")
+Alarma = NodePath("Alarma")
+
+[node name="Alarma" type="AudioStreamPlayer2D" parent="Formulario/Alarma"]
+stream = ExtResource("7_oajl0")
+
+[node name="OptionButton" type="OptionButton" parent="Formulario"]
+offset_left = 3.0
+offset_top = 10.0
+offset_right = 144.0
+offset_bottom = 41.0
+scale = Vector2(0.5, 0.5)
+
+[node name="ModoEtiqueta" type="Label" parent="Formulario/OptionButton"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = -28.0
+offset_right = 47.0
+offset_bottom = -5.0
+text = "Modo"
+
+[node name="Hora" type="LineEdit" parent="Formulario"]
+offset_left = 3.0
+offset_top = 39.0
+offset_right = 145.0
+offset_bottom = 70.0
+scale = Vector2(0.5, 0.5)
+script = ExtResource("5_ofc5n")
+
+[node name="HoraEtiqueta" type="Label" parent="Formulario/Hora"]
+layout_mode = 0
+offset_top = -26.0
+offset_right = 40.0
+offset_bottom = -3.0
+text = "Hora"
+metadata/_edit_use_anchors_ = true
+
+[node name="Minuto" type="LineEdit" parent="Formulario"]
+offset_left = 3.0
+offset_top = 69.0
+offset_right = 147.0
+offset_bottom = 100.0
+scale = Vector2(0.5, 0.5)
+script = ExtResource("5_ofc5n")
+
+[node name="MinutoEtiqueta" type="Label" parent="Formulario/Minuto"]
+layout_mode = 0
+offset_top = -24.0
+offset_right = 56.0
+offset_bottom = -1.0
+text = "Minuto"
+metadata/_edit_use_anchors_ = true
+
+[node name="Segundo" type="LineEdit" parent="Formulario"]
+offset_left = 4.0
+offset_top = 97.0
+offset_right = 148.0
+offset_bottom = 128.0
+scale = Vector2(0.5, 0.5)
+script = ExtResource("5_ofc5n")
+
+[node name="MinutoEtiqueta" type="Label" parent="Formulario/Segundo"]
+layout_mode = 0
+offset_top = -24.0
+offset_right = 56.0
+offset_bottom = -1.0
+text = "Segundo"
+metadata/_edit_use_anchors_ = true
+
+[node name="ConfigurarReloj" type="Button" parent="Formulario" node_paths=PackedStringArray("reloj", "Segu", "Minu", "Hora", "Modo", "Cronometro", "ListadoCronometro")]
+offset_left = 3.0
+offset_top = 122.0
+offset_right = 119.0
+offset_bottom = 153.0
+scale = Vector2(0.5, 0.5)
+text = "Cambiar Hora"
+script = ExtResource("6_dofne")
+reloj = NodePath("../../ClockSystem")
+Segu = NodePath("../Segundo")
+Minu = NodePath("../Minuto")
+Hora = NodePath("../Hora")
+Modo = NodePath("../OptionButton")
+Cronometro = NodePath("../Cronometro")
+ListadoCronometro = NodePath("../Cronometro/TiemposLabel")
+
+[node name="Cronometro" type="Button" parent="Formulario" node_paths=PackedStringArray("reloj", "labelTiempos")]
+offset_left = 208.0
+offset_top = 5.0
+offset_right = 286.0
+offset_bottom = 30.0
+theme_override_font_sizes/font_size = 9
+text = "Obtener tiempo"
+script = ExtResource("9_2aymq")
+reloj = NodePath("../../ClockSystem")
+labelTiempos = NodePath("TiemposLabel")
+
+[node name="TiemposLabel" type="Label" parent="Formulario/Cronometro"]
+layout_mode = 0
+offset_top = 29.0
+offset_right = 78.0
+offset_bottom = 134.0
+theme_override_constants/line_spacing = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(145, 66)
+zoom = Vector2(4, 4)
+
+[node name="ClassicAlarmClockBell_wav" type="Sprite2D" parent="."]
+position = Vector2(146, 141)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("11_x2p4b")
+
+[connection signal="button_down" from="Formulario/ConfigurarReloj" to="Formulario/ConfigurarReloj" method="_on_button_down"]
+[connection signal="button_down" from="Formulario/Cronometro" to="Formulario/Cronometro" method="_on_button_down"]
