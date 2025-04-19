@@ -28,8 +28,8 @@
 
 ---
 
-## 🔔 Archivo: classic_alarm_clock_bell.wav
-
+## 🔔 Sonido de alarma
+**Archivos:** classic_alarm_clock_bell.wav
 **Autor/a:** LloydEvans09  
 **Licencia:** Attribution NonCommercial 4.0 (uso no comercial con atribución obligatoria)  
 **Enlace:** [https://freesound.org/s/321832/](https://freesound.org/s/321832/)
