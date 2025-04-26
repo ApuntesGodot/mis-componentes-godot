@@ -11,7 +11,7 @@ var ultimo_segundo
 func _ready():
 	Aguja.texture =load("res://proyectos/reloj/recursos/arte/aguja%s.png" % tipo)
 
-func actualizar(hora: float, minuto: float, segundo: float):
+func actualizar(segundo : float):
 	match tipo:
 		"Segundo":
 			if ultimo_segundo!=segundo:
@@ -28,6 +28,8 @@ func actualizar(hora: float, minuto: float, segundo: float):
 			ultimo_segundo = segundo
 			
 		"Minuto":
-			rotation = deg_to_rad(6 * minuto)
+			rotation = deg_to_rad(6 * fmod(segundo / 60, 60))
+			
 		"Hora":
-			rotation = deg_to_rad(30 * hora)	
+
+			rotation = deg_to_rad(30 * fmod(segundo / 3600, 60))

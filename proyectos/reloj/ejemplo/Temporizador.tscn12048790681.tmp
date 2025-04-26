@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://dunkmrw7777q1"]
+
+[ext_resource type="Script" uid="uid://b5bouf5sq26td" path="res://proyectos/reloj/componentes/TemporizadorStandalone.gd" id="1_8r600"]
+[ext_resource type="Script" uid="uid://b5g187y3qyh8" path="res://proyectos/reloj/ejemplo/scripts/formularioTemporizador.gd" id="1_bsvwh"]
+[ext_resource type="Script" uid="uid://0f42r7jlwrjn" path="res://proyectos/reloj/componentes/ClockSystem.gd" id="1_rpdx2"]
+[ext_resource type="Script" uid="uid://bwscghmq1aqso" path="res://proyectos/reloj/ejemplo/scripts/verificarFormatoNumerico.gd" id="2_8r600"]
+[ext_resource type="AudioStream" uid="uid://ddm73mus35nsn" path="res://proyectos/reloj/recursos/audio/tick-and-tock/321832__lloydevans09__classic_alarm_clock_bell.wav" id="5_u7v2g"]
+
+[node name="Temporizador" type="Node2D"]
+script = ExtResource("1_bsvwh")
+
+[node name="LineEdit" type="LineEdit" parent="."]
+offset_left = 262.0
+offset_top = 176.0
+offset_right = 729.0
+offset_bottom = 354.0
+theme_override_font_sizes/font_size = 125
+alignment = 1
+script = ExtResource("2_8r600")
+
+[node name="Tiempo" type="Label" parent="."]
+offset_left = 205.0
+offset_top = 46.0
+offset_right = 786.0
+offset_bottom = 155.0
+theme_override_font_sizes/font_size = 50
+text = "ALARMA CUENTA ATRAS"
+
+[node name="Button" type="Button" parent="."]
+offset_left = 171.0
+offset_top = 390.0
+offset_right = 819.0
+offset_bottom = 527.0
+theme_override_font_sizes/font_size = 50
+text = "Iniciar cuenta atras"
+
+[node name="Temporizador" type="Node" parent="." node_paths=PackedStringArray("reloj", "nodosSucritosEmisores", "nodosSucritosReceptores")]
+script = ExtResource("1_8r600")
+reloj = NodePath("../ClockSystem")
+DuracionTemporizador = 42
+nodosSucritosEmisores = [NodePath("..")]
+nodosSucritosReceptores = [NodePath("..")]
+metadata/_custom_type_script = "uid://b5bouf5sq26td"
+
+[node name="ClockSystem" type="Node" parent="." node_paths=PackedStringArray("nodosSuscritos")]
+script = ExtResource("1_rpdx2")
+nodosSuscritos = [NodePath("../Temporizador")]
+metadata/_custom_type_script = "uid://0f42r7jlwrjn"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_u7v2g")
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]

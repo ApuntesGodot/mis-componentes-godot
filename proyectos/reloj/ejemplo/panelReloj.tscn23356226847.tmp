@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bmawiaefku00h" path="res://proyectos/reloj/recursos/arte/vecteezy_clock-drop-icon-logo-vector-design_11774673.jpg" id="1_anmug"]
 [ext_resource type="PackedScene" uid="uid://dnrwy377bw1x0" path="res://proyectos/reloj/escenas/agujas.tscn" id="2_1x4il"]
 [ext_resource type="Script" uid="uid://0f42r7jlwrjn" path="res://proyectos/reloj/componentes/ClockSystem.gd" id="3_1x4il"]
+[ext_resource type="Script" uid="uid://cmubuiga83d0a" path="res://proyectos/reloj/componentes/actualizarTiempo.gd" id="4_3cvpw"]
 [ext_resource type="Script" uid="uid://dd7uwdhgx1rhp" path="res://proyectos/reloj/componentes/conectorTemporizador.gd" id="4_xdemk"]
 [ext_resource type="Script" uid="uid://bwscghmq1aqso" path="res://proyectos/reloj/ejemplo/scripts/verificarFormatoNumerico.gd" id="5_ofc5n"]
 [ext_resource type="Script" uid="uid://33ljku56tsad" path="res://proyectos/reloj/ejemplo/scripts/enviarCambioDeHora.gd" id="6_dofne"]
@@ -13,7 +14,6 @@
 [ext_resource type="Script" uid="uid://ds6qqoe83fkdp" path="res://proyectos/reloj/ejemplo/scripts/modificar_tiempo_boton.gd" id="10_s473q"]
 [ext_resource type="Texture2D" uid="uid://cm01t32guxepd" path="res://proyectos/reloj/recursos/atribuciones/classic_alarm_clock_bell.wav.jpg" id="11_x2p4b"]
 [ext_resource type="Script" uid="uid://cfv6lvt0kj5r7" path="res://proyectos/reloj/componentes/darAccesoFormularios.gd" id="13_uorjd"]
-[ext_resource type="Script" uid="uid://wcboygr8w3g8" path="res://proyectos/reloj/ejemplo/scripts/CambiarTiempo.gd" id="14_lfbif"]
 
 [node name="PanelReloj" type="Node2D"]
 
@@ -37,13 +37,25 @@ position = Vector2(-30.0001, 39.9999)
 scale = Vector2(7.5, 5)
 tipo = "Segundo"
 
-[node name="ClockSystem" type="Node" parent="." node_paths=PackedStringArray("nodosSuscritos")]
-script = ExtResource("3_1x4il")
-hora_inicial = 6
-minuto_inicial = 30
-segundo_inicial = 20
-nodosSuscritos = [NodePath("../FondoReloj/Segundo"), NodePath("../FondoReloj/Minuto"), NodePath("../FondoReloj/Hora")]
-metadata/_custom_type_script = "uid://0f42r7jlwrjn"
+[node name="formularios" type="Node" parent="." node_paths=PackedStringArray("formularioSegundo", "formularioMinuto", "formularioHora", "formularioModo", "formularioVelocidad", "formularios_suscritos", "boton_enviar_formulario", "formularios_submit_suscritos")]
+script = ExtResource("13_uorjd")
+formularioSegundo = NodePath("../Formulario/Segundo")
+formularioMinuto = NodePath("../Formulario/Minuto")
+formularioHora = NodePath("../Formulario/Hora")
+formularioModo = NodePath("../Formulario/ModoButton")
+formularioVelocidad = NodePath("../Formulario/VelocidadTiempo")
+formularios_suscritos = [NodePath("../Formulario/AumentarTiempo"), NodePath("../Formulario/DisminuirTiempo"), NodePath("../Formulario/ConfigurarReloj"), NodePath("../Formulario/Cronometro")]
+boton_enviar_formulario = NodePath("../Formulario/ConfigurarReloj")
+formularios_submit_suscritos = [NodePath("../Formulario/Cronometro")]
+metadata/_custom_type_script = "uid://cfv6lvt0kj5r7"
+
+[node name="actualizarTiempo" type="Node" parent="." node_paths=PackedStringArray("reloj", "Sengundero", "Minutero", "Horero")]
+script = ExtResource("4_3cvpw")
+reloj = NodePath("../ClockSystem")
+Sengundero = NodePath("../FondoReloj/Segundo")
+Minutero = NodePath("../FondoReloj/Minuto")
+Horero = NodePath("../FondoReloj/Hora")
+metadata/_custom_type_script = "uid://cmubuiga83d0a"
 
 [node name="conectorTemporizador" type="Node" parent="." node_paths=PackedStringArray("reloj", "nodoAvisado")]
 script = ExtResource("4_xdemk")
@@ -51,20 +63,12 @@ reloj = NodePath("../ClockSystem")
 nodoAvisado = NodePath("../Formulario/Alarma")
 metadata/_custom_type_script = "uid://dd7uwdhgx1rhp"
 
-[node name="Formulario" type="Node" parent="."]
+[node name="ClockSystem" type="Node" parent="."]
+script = ExtResource("3_1x4il")
+segundo_inicial = 5
+metadata/_custom_type_script = "uid://0f42r7jlwrjn"
 
-[node name="formularios" type="Node" parent="Formulario" node_paths=PackedStringArray("reloj", "formularioSegundo", "formularioMinuto", "formularioHora", "formularioModo", "formularioVelocidad", "formularios_suscritos", "boton_enviar_formulario", "formularios_submit_suscritos")]
-script = ExtResource("13_uorjd")
-reloj = NodePath("../../ClockSystem")
-formularioSegundo = NodePath("../Segundo")
-formularioMinuto = NodePath("../Minuto")
-formularioHora = NodePath("../Hora")
-formularioModo = NodePath("../ModoButton")
-formularioVelocidad = NodePath("../VelocidadTiempo")
-formularios_suscritos = [NodePath("../AumentarTiempo"), NodePath("../DisminuirTiempo"), NodePath("../ConfigurarReloj"), NodePath("../Cronometro")]
-boton_enviar_formulario = NodePath("../ConfigurarReloj")
-formularios_submit_suscritos = [NodePath("../Cronometro")]
-metadata/_custom_type_script = "uid://cfv6lvt0kj5r7"
+[node name="Formulario" type="Node" parent="."]
 
 [node name="Alarma" type="Label" parent="Formulario" node_paths=PackedStringArray("Alarma")]
 offset_left = 161.7
@@ -96,15 +100,13 @@ offset_right = 47.0
 offset_bottom = -5.0
 text = "Modo"
 
-[node name="Hora" type="LineEdit" parent="Formulario" node_paths=PackedStringArray("reloj")]
+[node name="Hora" type="LineEdit" parent="Formulario"]
 offset_left = -2.0
 offset_top = 39.0
 offset_right = 140.0
 offset_bottom = 70.0
 scale = Vector2(0.5, 0.5)
 script = ExtResource("5_ofc5n")
-reloj = NodePath("../../ClockSystem")
-tipoFormulario = "Hora"
 
 [node name="HoraEtiqueta" type="Label" parent="Formulario/Hora"]
 layout_mode = 0
@@ -114,15 +116,13 @@ offset_bottom = -3.0
 text = "Hora"
 metadata/_edit_use_anchors_ = true
 
-[node name="Minuto" type="LineEdit" parent="Formulario" node_paths=PackedStringArray("reloj")]
+[node name="Minuto" type="LineEdit" parent="Formulario"]
 offset_left = -2.0
 offset_top = 69.0
 offset_right = 142.0
 offset_bottom = 100.0
 scale = Vector2(0.5, 0.5)
 script = ExtResource("5_ofc5n")
-reloj = NodePath("../../ClockSystem")
-tipoFormulario = "Minuto"
 
 [node name="MinutoEtiqueta" type="Label" parent="Formulario/Minuto"]
 layout_mode = 0
@@ -132,15 +132,13 @@ offset_bottom = -1.0
 text = "Minuto"
 metadata/_edit_use_anchors_ = true
 
-[node name="Segundo" type="LineEdit" parent="Formulario" node_paths=PackedStringArray("reloj")]
+[node name="Segundo" type="LineEdit" parent="Formulario"]
 offset_left = -1.0
 offset_top = 97.0
 offset_right = 143.0
 offset_bottom = 128.0
 scale = Vector2(0.5, 0.5)
 script = ExtResource("5_ofc5n")
-reloj = NodePath("../../ClockSystem")
-tipoFormulario = "Segundo"
 
 [node name="SegundoEtiqueta" type="Label" parent="Formulario/Segundo"]
 layout_mode = 0
@@ -203,13 +201,12 @@ horizontal_alignment = 1
 
 [node name="VelocidadTiempo" type="LineEdit" parent="Formulario"]
 offset_top = 126.0
-offset_right = 152.0
+offset_right = 144.0
 offset_bottom = 157.0
 scale = Vector2(0.5, 0.5)
 script = ExtResource("5_ofc5n")
-valor_default = "1.00"
-min_length = 1
-tipo = "float"
+valor_default = "100"
+min_length = 3
 
 [node name="Label" type="Label" parent="Formulario/VelocidadTiempo"]
 layout_mode = 0
@@ -217,16 +214,6 @@ offset_top = -24.0
 offset_right = 76.0
 offset_bottom = -1.0
 text = "Velocidad"
-
-[node name="VelocidadBoton" type="Button" parent="Formulario/VelocidadTiempo" node_paths=PackedStringArray("reloj", "VelocidadForm")]
-layout_mode = 0
-offset_top = 38.0
-offset_right = 153.0
-offset_bottom = 69.0
-text = "Cambiar Velocidad"
-script = ExtResource("14_lfbif")
-reloj = NodePath("../../../ClockSystem")
-VelocidadForm = NodePath("..")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(187, 68)
@@ -242,4 +229,3 @@ texture = ExtResource("11_x2p4b")
 [connection signal="button_down" from="Formulario/DisminuirTiempo" to="Formulario/DisminuirTiempo" method="_on_button_down"]
 [connection signal="button_down" from="Formulario/AumentarTiempo" to="Formulario/AumentarTiempo" method="_on_button_down"]
 [connection signal="button_down" from="Formulario/Cronometro" to="Formulario/Cronometro" method="_on_button_down"]
-[connection signal="button_down" from="Formulario/VelocidadTiempo/VelocidadBoton" to="Formulario/VelocidadTiempo/VelocidadBoton" method="_on_button_down"]

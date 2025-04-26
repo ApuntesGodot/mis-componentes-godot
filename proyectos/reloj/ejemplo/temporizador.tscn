@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=3 uid="uid://dunkmrw7777q1"]
+
+[ext_resource type="Script" uid="uid://b5g187y3qyh8" path="res://proyectos/reloj/ejemplo/scripts/formularioTemporizador.gd" id="1_usq8d"]
+[ext_resource type="Script" uid="uid://bwscghmq1aqso" path="res://proyectos/reloj/ejemplo/scripts/verificarFormatoNumerico.gd" id="2_usxxw"]
+[ext_resource type="Script" uid="uid://b5bouf5sq26td" path="res://proyectos/reloj/componentes/Temporizador.gd" id="3_6ymjl"]
+[ext_resource type="Script" uid="uid://0f42r7jlwrjn" path="res://proyectos/reloj/componentes/ClockSystem.gd" id="4_2vbmg"]
+[ext_resource type="AudioStream" uid="uid://ddm73mus35nsn" path="res://proyectos/reloj/recursos/audio/tick-and-tock/321832__lloydevans09__classic_alarm_clock_bell.wav" id="5_gd1du"]
+[ext_resource type="Texture2D" uid="uid://cm01t32guxepd" path="res://proyectos/reloj/recursos/atribuciones/classic_alarm_clock_bell.wav.jpg" id="6_usxxw"]
+
+[node name="Temporizador" type="Node2D" node_paths=PackedStringArray("Alarma")]
+script = ExtResource("1_usq8d")
+Alarma = NodePath("AudioStreamPlayer2D")
+
+[node name="LineEdit" type="LineEdit" parent="."]
+offset_left = 262.0
+offset_top = 176.0
+offset_right = 729.0
+offset_bottom = 354.0
+theme_override_font_sizes/font_size = 125
+alignment = 1
+script = ExtResource("2_usxxw")
+
+[node name="Tiempo" type="Label" parent="."]
+offset_left = 205.0
+offset_top = 46.0
+offset_right = 786.0
+offset_bottom = 155.0
+theme_override_font_sizes/font_size = 50
+text = "ALARMA CUENTA ATRAS"
+
+[node name="Button" type="Button" parent="."]
+offset_left = 171.0
+offset_top = 390.0
+offset_right = 819.0
+offset_bottom = 527.0
+theme_override_font_sizes/font_size = 50
+text = "Iniciar cuenta atras"
+
+[node name="Temporizador" type="Node" parent="." node_paths=PackedStringArray("reloj", "nodosSucritosEmisores", "nodosSucritosReceptores")]
+script = ExtResource("3_6ymjl")
+reloj = NodePath("../ClockSystem")
+DuracionTemporizador = 42
+nodosSucritosEmisores = [NodePath("..")]
+nodosSucritosReceptores = [NodePath("..")]
+metadata/_custom_type_script = "uid://b5bouf5sq26td"
+
+[node name="ClockSystem" type="Node" parent="." node_paths=PackedStringArray("nodosSuscritos")]
+script = ExtResource("4_2vbmg")
+nodosSuscritos = [NodePath("../Temporizador")]
+metadata/_custom_type_script = "uid://0f42r7jlwrjn"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_gd1du")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="ClassicAlarmClockBell_wav" type="Sprite2D" parent="."]
+position = Vector2(546, 607)
+scale = Vector2(1.1382, 1.62083)
+texture = ExtResource("6_usxxw")
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]

@@ -13,3 +13,7 @@ config_version=5
 config/name="Componentes-Godot"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="uid://c62hdymgdaxp"
+
+[display]
+
+window/stretch/mode="canvas_items"
